@@ -1,0 +1,98 @@
+FROM php:7.1-fpm-alpine
+
+# Setup environment
+ENV DEBIAN_FRONTEND noninteractive
+
+# Runtime dependencies
+ENV PHPIZE_DEPS \
+    autoconf \
+    file \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    pkgconf \
+    re2c
+
+RUN apk add --no-cache --virtual .persistent-deps \
+        freetype libjpeg-turbo libpng \
+        libwebp libxpm imagemagick \
+        libltdl \
+        icu-libs \
+        libxml2 \
+        libpq \
+        gettext \
+        enchant aspell \
+        tidyhtml \
+        libxslt \
+        yaml \
+        recode \
+        net-snmp \
+    && apk add --no-cache --virtual .build-deps \
+        $PHPIZE_DEPS \
+        freetype-dev libjpeg-turbo-dev libpng-dev \
+        libwebp-dev libxpm-dev imagemagick-dev \
+        libtool \
+        icu-dev \
+        libxml2-dev \
+        postgresql-dev \
+        gettext-dev \
+        enchant-dev aspell-dev \
+        tidyhtml-dev \
+        bzip2-dev \
+        yaml-dev \
+        gmp-dev \
+        libxslt-dev \
+        openldap-dev \
+        recode-dev \
+        net-snmp-dev \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ \
+                                    --with-jpeg-dir=/usr/include/ \
+                                    --with-png-dir=/usr/include/ \
+                                    --with-xpm-dir==/usr/include/ \
+                                    --with-webp-dir==/usr/include/ \
+    && docker-php-ext-install -j$(nproc) \
+        gd exif \
+        ldap \
+        bcmath gmp \
+        opcache \
+        intl \
+        dba \
+        mysqli pgsql \
+        pdo_mysql pdo_pgsql \
+        soap \
+        bz2 zip \
+        tidy \
+        pspell \
+        enchant \
+        calendar \
+        gettext \
+        xmlrpc \
+        wddx \
+        shmop sysvmsg sysvsem sysvshm \
+        sockets \
+        shmop \
+        pcntl \
+        xsl \
+        recode \
+        snmp \
+    # Pecl
+    && pecl channel-update pecl.php.net \
+    && pecl install imagick && docker-php-ext-enable imagick \
+    && pecl install yaml-2.0.0 && docker-php-ext-enable yaml \
+    # TODO: check if apcu needed.
+    && pecl install apcu xdebug \
+    && apk del .build-deps
+
+# TODO: iconv already installed by `unknown` implementation. Check if corrent.
+
+# TODO: install imap extension.
+# TODO: add in build and persistent deps.
+#RUN apk add --no-cache imap krb5 imap-dev krb5-dev
+#RUN docker-php-ext-configure imap --with-imap --with-kerberos --with-imap-libssl
+#RUN docker-php-ext-install -j$(nproc) imap
+# TODO: fix crash on imap enabling. Error code: 139.
+# NOTE: following needed only for test.
+#RUN docker-php-ext-enable imap
+
+CMD ["php-fpm"]
