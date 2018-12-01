@@ -1,0 +1,151 @@
+DTrace Support => disabled
+
+Core
+
+display_errors => STDOUT => STDOUT
+enable_dl => On => On
+error_reporting => no value => no value
+expose_php => On => On
+extension_dir => /usr/local/lib/php/extensions/no-debug-non-zts-20160303 => /usr/local/lib/php/extensions/no-debug-non-zts-20160303
+log_errors => Off => Off
+mail.add_x_header => Off => Off
+memory_limit => 128M => 128M
+post_max_size => 8M => 8M
+request_order => no value => no value
+upload_max_filesize => 2M => 2M
+variables_order => EGPCS => EGPCS
+zend.assertions => 1 => 1
+
+curl
+
+IDN => No
+SPNEGO => No
+TLS-SRP => No
+GSSAPI => No
+KERBEROS5 => No
+PSL => No
+Protocols => dict, file, ftp, ftps, gopher, http, https, imap, imaps, pop3, pop3s, rtsp, scp, sftp, smb, smbs, smtp, smtps, telnet, tftp
+
+date
+
+"Olson" Timezone Database Version => 2018.6
+
+date.timezone => no value => no value
+
+dba
+
+DBA support => enabled
+Supported handlers => cdb cdb_make inifile flatfile
+
+Directive => Local Value => Master Value
+dba.default_handler => flatfile => flatfile
+
+enchant
+
+enchant support => enabled
+Version => 7.1.24
+Libenchant Version => 1.5.x
+
+ispell => Ispell Provider => /usr/lib/enchant/libenchant_ispell.so
+aspell => Aspell Provider => /usr/lib/enchant/libenchant_aspell.so
+myspell => Myspell Provider => /usr/lib/enchant/libenchant_myspell.so
+
+iconv
+
+iconv support => enabled
+iconv implementation => unknown
+iconv library version => unknown
+
+imagick
+
+imagick.skip_version_check => 0 => 0
+
+ldap
+
+PDO
+
+PDO drivers => sqlite, mysql, pgsql
+
+pdo_mysql
+
+pdo_mysql.default_socket => no value => no value
+
+session
+
+session.gc_divisor => 100 => 100
+session.gc_maxlifetime => 1440 => 1440
+session.gc_probability => 1 => 1
+session.save_path => no value => no value
+session.sid_bits_per_character => 4 => 4
+session.sid_length => 32 => 32
+
+tidy
+
+tidy.clean_output => 0 => 0
+
+Zend OPcache
+
+opcache.max_accelerated_files => 10000 => 10000
+opcache.memory_consumption => 128 => 128
+
+Additional Modules
+
+Module Name
+
+Environment
+
+Variable => Value
+PHP_EXTRA_CONFIGURE_ARGS => --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --disable-cgi
+HOSTNAME => server
+PHP_INI_DIR => /usr/local/etc/php
+SHLVL => 1
+HOME => /root
+PHP_LDFLAGS => -Wl,-O1 -Wl,--hash-style=both -pie
+PHP_CFLAGS => -fstack-protector-strong -fpic -fpie -O2
+PHP_MD5 =>
+PHP_VERSION => 7.1.24
+GPG_KEYS => A917B1ECDA84AEC2B568FED6F50ABC807BD5DCD0 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 1729F83938DA44E27BA0F4D3DBDB397470D12172
+PHP_CPPFLAGS => -fstack-protector-strong -fpic -fpie -O2
+PHP_ASC_URL => https://secure.php.net/get/php-7.1.24.tar.xz.asc/from/this/mirror
+ENV_PATH => /var/www/html/docker/.env
+PHP_URL => https://secure.php.net/get/php-7.1.24.tar.xz/from/this/mirror
+TERM => xterm
+PATH => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+DEBIAN_FRONTEND => noninteractive
+PHPIZE_DEPS => autoconf     file     g++     gcc     libc-dev     make     pkgconf     re2c
+PWD => /var/www/html
+PHP_SHA256 => e70dcec0ae28b6bc308b78972ec15aa850808819cc765f505aa51e5a7e2fa5d7
+
+PHP Variables
+
+Variable => Value
+$_SERVER['PHP_EXTRA_CONFIGURE_ARGS'] => --enable-fpm --with-fpm-user=www-data --with-fpm-group=www-data --disable-cgi
+$_SERVER['HOSTNAME'] => server
+$_SERVER['PHP_INI_DIR'] => /usr/local/etc/php
+$_SERVER['SHLVL'] => 1
+$_SERVER['HOME'] => /root
+$_SERVER['PHP_LDFLAGS'] => -Wl,-O1 -Wl,--hash-style=both -pie
+$_SERVER['PHP_CFLAGS'] => -fstack-protector-strong -fpic -fpie -O2
+$_SERVER['PHP_MD5'] =>
+$_SERVER['PHP_VERSION'] => 7.1.24
+$_SERVER['GPG_KEYS'] => A917B1ECDA84AEC2B568FED6F50ABC807BD5DCD0 528995BFEDFBA7191D46839EF9BA0ADA31CBD89E 1729F83938DA44E27BA0F4D3DBDB397470D12172
+$_SERVER['PHP_CPPFLAGS'] => -fstack-protector-strong -fpic -fpie -O2
+$_SERVER['PHP_ASC_URL'] => https://secure.php.net/get/php-7.1.24.tar.xz.asc/from/this/mirror
+$_SERVER['ENV_PATH'] => /var/www/html/docker/.env
+$_SERVER['PHP_URL'] => https://secure.php.net/get/php-7.1.24.tar.xz/from/this/mirror
+$_SERVER['TERM'] => xterm
+$_SERVER['PATH'] => /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+$_SERVER['DEBIAN_FRONTEND'] => noninteractive
+$_SERVER['PHPIZE_DEPS'] => autoconf     file     g++     gcc     libc-dev     make     pkgconf     re2c
+$_SERVER['PWD'] => /var/www/html
+$_SERVER['PHP_SHA256'] => e70dcec0ae28b6bc308b78972ec15aa850808819cc765f505aa51e5a7e2fa5d7
+$_SERVER['PHP_SELF'] =>
+$_SERVER['SCRIPT_NAME'] =>
+$_SERVER['SCRIPT_FILENAME'] =>
+$_SERVER['PATH_TRANSLATED'] =>
+$_SERVER['DOCUMENT_ROOT'] =>
+$_SERVER['REQUEST_TIME_FLOAT'] => 1543703115.0974
+$_SERVER['REQUEST_TIME'] => 1543703115
+$_SERVER['argv'] => Array
+(
+)

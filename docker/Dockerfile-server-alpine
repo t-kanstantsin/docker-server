@@ -8,15 +8,15 @@ RUN apk add --no-cache \
             git rsyslog \
             curl wget zip unzip \
     # Fix terminal
-    # todo: check i needed in alpine.
+    # TODO: check i needed in alpine.
     && echo "export TERM=xterm mc" >> ~/.bashrc \
     \
     # Install ssl cerbot
-    # todo check if works in same way.
+    # TODO check if works in same way.
     && apk add --no-cache certbot \
     \
     # install sshd
-    # todo: check paths in alpine.
+    # TODO: check paths in alpine.
     && apk add --no-cache openssh-server openssh-client \
     && mkdir -p /var/run/sshd \
     #RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
@@ -30,12 +30,14 @@ RUN apk add --no-cache \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     \
     # MySQL client
-    # todo: check if fully compatible with mysql-client-5.7. There mariadb-client-10 used.
+    # TODO: check if fully compatible with mysql-client-5.7. There mariadb-client-10 used.
     && apk add --no-cache mysql-client \
     \
     # Install supervisord
     && apk add --no-cache supervisor \
-    # todo: check paths.
+    # TODO: check paths.
     && mkdir -p /var/log/supervisord
+
+# TODO: check path to crond - changed in alpine.
 
 CMD ["supervisord", "-n"]
