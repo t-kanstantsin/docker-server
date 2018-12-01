@@ -81,6 +81,7 @@ RUN apk add --no-cache --virtual .persistent-deps \
     && pecl install imagick && docker-php-ext-enable imagick \
     && pecl install yaml-2.0.0 && docker-php-ext-enable yaml \
     # TODO: check if apcu needed.
+    # TODO: try to enable xdebug in alpine.
     && pecl install apcu xdebug \
     && apk del .build-deps
 
