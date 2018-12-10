@@ -1,4 +1,7 @@
 FROM ubuntu:18.04
+
+#TODO: rewrite with official docker image and try both debian and alpine.
+
 MAINTAINER Mathew Patell <likomi@mail.ru>
 
 # Setup environment
