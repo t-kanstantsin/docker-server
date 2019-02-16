@@ -30,7 +30,6 @@ RUN apk add --no-cache \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
     \
     # MySQL client
-    # TODO: check if fully compatible with mysql-client-5.7. There mariadb-client-10 used.
     && apk add --no-cache mysql-client \
     \
     # Install supervisord
