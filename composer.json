@@ -1,5 +1,5 @@
 {
-  "name": "matthew-p/docker-server",
+  "name": "t-kanstantsin/docker-server",
   "description": "Universal docker server, Nginx, PHP-FPM, MySql, Redis",
   "type": "package",
   "keywords": ["docker","server","php","fpm","nginx","mysql","redis","docker-compose","universal","dynamic","deploy","composer"],
@@ -10,5 +10,8 @@
       "email": "lukomi@mail.ru"
     }
   ],
+  "replace": {
+    "matthew-p/docker-server": "*"
+  },
   "bin": ["bin/site-start.sh", "bin/site-exec.sh", "bin/site-run.sh", "bin/site-aws.sh", "bin/site-deploy.sh"]
 }
