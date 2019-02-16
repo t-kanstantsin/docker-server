@@ -1,5 +1,5 @@
 {
-  "name": "t-kanstantsin/docker-server",
+  "name": "matthew-p/docker-server",
   "description": "Universal docker server, Nginx, PHP-FPM, MySql, Redis",
   "type": "package",
   "keywords": ["docker","server","php","fpm","nginx","mysql","redis","docker-compose","universal","dynamic","deploy","composer"],
