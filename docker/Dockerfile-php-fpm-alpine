@@ -90,7 +90,6 @@ RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/test
     && pecl channel-update pecl.php.net \
     && pecl install imagick && docker-php-ext-enable imagick \
     && pecl install yaml-2.0.0 && docker-php-ext-enable yaml \
-    # TODO: check if apcu needed. \
     # TODO: try to enable xdebug in alpine. \
     && pecl install xdebug \
     && apk del .build-deps
