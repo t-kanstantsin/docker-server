@@ -5,11 +5,13 @@
  - [Server envs](#server-envs)
  - [Mysql envs](#mysql-envs)
  - [Redis envs](#redis-envs)
+ - [FTP envs](#ftp-envs)
  - [SSH envs](#ssh-envs)
  - [PHP-FPM envs](#php-fpm-envs)
  - [Testing envs](#testing-envs)
  - [Auto update hosts file (host machine)](#auto-update-hosts-envs)
  - [Auto create nginx proxy (host machine)](#auto-create-proxy-envs)
+ - [Deploy](#deploy)
 
 ## <a id="domain-envs"></a>Domain envs (service: nginx, server)
 Property | Values | Description
@@ -20,7 +22,7 @@ Property | Values | Description
 `DOMAIN_COVERAGE` | `(string)` `Default: not set` | Site coverage domain. (e.g. coverage.sample.io)
 `DOMAIN_OPCACHE` | `(string)` `Default: not set` | Site opcache domain. (e.g. opcache.sample.io) 
 `DOMAIN_CUSTOM_NAME` | `(string)` | Custom domain name. Create nginx config with `# <domains-include>DOMAIN_COMMON</domains-include>` and `server_name  $COMMON_DOMAIN;` or copy from `vendor/matthew-p/docker-server/docker/nginx/templates/domain.conf` to `docker/nginx/conf-dynamic.d/custom.conf` and change. 
-`SSL_DOMAINS` | `(array)` `Default: not ser` | Config letsencrypt ssl domains. Example: `SSL_DOMAINS[0]="admin@sample.io :sample.io api.sample.io admin.sample.io:"`
+`SSL_DOMAINS` | `(array)` `Default: not set` | Config letsencrypt ssl domains. Example: `SSL_DOMAINS[0]="admin@sample.io :sample.io api.sample.io admin.sample.io:"`
 
 ## <a id="project-envs"></a>Project env (service: all)
 Property | Values | Description
@@ -43,12 +45,13 @@ Property | Values | Description
 ## <a id="images-envs"></a>Images env (service: all)
 Property | Values | Description
 ---------|--------|------------
-`NGINX_REPOSITORY`| `(string)` `Default: matthewpatell/universal-docker-nginx:2.1` | Nginx docker image
-`SERVER_REPOSITORY`| `(string)` `Default: matthewpatell/universal-docker-server:2.2` | Server docker image (php, ssh and etc.)
+`NGINX_REPOSITORY`| `(string)` `Default: matthewpatell/universal-docker-nginx:3.2` | Nginx docker image
+`SERVER_REPOSITORY`| `(string)` `Default: matthewpatell/universal-docker-server:3.8-dev` | Either server (or server dev) image in non-scalable configuration, or `matthewpatell/universal-docker-server-php-fpm` for scaling `nginx`+`php-fpm`.
+`TERMINAL_REPOSITORY`| `(string)` `Default: none` | Static non-scalable docker image for ssh connection, cron, queue listener and etc. Use image: `matthewpatell/universal-docker-server`.
 
 ## <a id="server-envs"></a>Server env (service: server)
 
-`-f !!docker-compose.yml` add to `SERVICES` (default: added)
+`-f !!docker-compose.nginx.yml` add to `SERVICES` (default: added)
 
 Property | Values | Description
 ---------|--------|------------
@@ -79,9 +82,23 @@ Property | Values | Description
 `REDIS_PASSWORD` | `(string)` | Redis password
 `REDIS_DATABASE` | `(string)` | Redis database
 
+## <a id="ftp-envs"></a>FTP env (service: ftp)
+
+`-f !!docker-compose.ftp.yml` add to `SERVICES` (default: not added)
+
+Property | Values | Description
+---------|--------|------------
+`FTP_DB_TABLE_NAME`| `(string)` `Default: ftp_users` | Mysql table name where stored ftp users
+`FTP_PORT_BIND`| `(int)` `Default: 21` | FTP primary port
+`FTP_PASSIVE_PORT_1-10` | `(int)` `Default: 30000-30009` | FTP passive ports 
+`FTP_SUBJECT_COUNTRY` | `(string)` | Country code (ISO 3166-1 alpha-2). For SSL
+`FTP_SUBJECT_CITY` | `(string)` | City name. For SSL
+`FTP_SUBJECT_ORGANIZATION` | `(string)` | Organization name. For SSL
+`FTP_SUBJECT_DOMAIN` | `(string)` | Organization name. For SSL
+
 ## <a id="ssh-envs"></a>SSH env (service: server)
 
-`-f !!docker-compose.yml` add to `SERVICES` (default: added)
+`-f !!docker-compose.ssh.yml` add to `SERVICES`
 
 Property | Values | Description
 ---------|--------|------------
@@ -90,7 +107,7 @@ Property | Values | Description
 
 ## <a id="php-fpm-envs"></a>PHP-FPM env (service: server)
 
-`-f !!docker-compose.yml` add to `SERVICES` (default: added)
+`-f !!docker-compose.php-fpm.yml` add to `SERVICES` (default: added)
 
 Property | Values | Description
 ---------|--------|------------
@@ -100,7 +117,7 @@ Property | Values | Description
 
 ## <a id="testing-envs"></a>Testing env (service: server)
 
-`-f !!docker-compose.yml` add to `SERVICES` (default: added)  
+`-f !!docker-compose.tests.yml` add to `SERVICES` 
 See [example CI config](CI-EXAMPLE.md)
 
 Property | Values | Description
@@ -137,3 +154,11 @@ Property | Values | Description
 ---------|--------|------------
 `AWS_UPDATE_TASK`| `(string)` | Create/update task definition on aws. Console command: `composer server-prod update-task`
 `AWS_UPDATE_ENV`| `(string)` | Create/update `.env` file on remote host. Console command: `composer server-prod update-env`
+
+## <a id="deploy"></a>Deploy
+Property | Values | Description
+---------|--------|------------
+`DEPLOY_SERVER_NAME`| `string` | SSH server name.
+`DEPLOY_CONTAINER_NAME`| `string` | Docker container name for deploy.
+`PROJECT_PATH`| `(string)` | Path to project folder in remote server.
+`DEPLOY_STRATEGY`| `(string)` `1-4` | See `site-deploy.sh` for more info

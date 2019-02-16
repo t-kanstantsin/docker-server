@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  server:
+    hostname: terminal
+    image: ${TERMINAL_REPOSITORY}
+    container_name: ${COMPOSE_PROJECT_NAME}_terminal
+    mem_limit: 568500000
+    networks:
+      common:
+        aliases:
+        - terminal

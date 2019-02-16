@@ -32,7 +32,9 @@ to the require section of your `composer.json` file.
         "server-exec": "vendor/bin/site-exec.sh --env-file=docker/.env-local",
      
         // (optional)
-        "server-prod": "vendor/bin/site-aws.sh --env-file=docker/.env-prod"
+        "server-prod": "vendor/bin/site-aws.sh --env-file=docker/.env-prod",
+        // (optional)
+        "server-deploy-dev": "vendor/bin/site-deploy.sh --env-file=docker/.env-dev"
     }
     ...
     ```
@@ -49,6 +51,9 @@ to the require section of your `composer.json` file.
 ## Environments && Commands
  - [See all available environments](docs/ENVIRONMENTS.md)
  - [See console commands](docs/COMMANDS.md)
+ 
+## PhpStorm samples
+ - [Deploy config](phpstorm/SAMPLE_DEPLOY_CONFIG.xml)
 
 **FEATURES**
 ---
@@ -71,6 +76,7 @@ to the require section of your `composer.json` file.
 - AWS create/update "Task Definitions"
 - Auto update _/etc/hosts_ file on host machine
 - Auto create nginx proxies on host machine
+- Deploy
 - And etc.  
 
 ## LIFEHACKS
@@ -103,9 +109,9 @@ to the require section of your `composer.json` file.
     
     - with server images:
 
-        ```docker run --rm --interactive --volume $PWD:/app registry.kakadu.space/web/mypets:3.6-server bash -c 'cd /app && composer install --no-scripts'```
+        ```docker run --rm --interactive --volume $PWD:/app matthewpatell/universal-docker-server:3.8 bash -c 'cd /app && composer install --no-scripts'```
         
     - with server image and additional global packages:
-        ```docker run --rm --interactive --volume $PWD:/app registry.kakadu.space/web/mypets:3.6-server bash -c 'cd /app && composer global require "fxp/composer-asset-plugin:^1.4.2" && composer global require "hirak/prestissimo:~0.3.7" && composer install --no-scripts'```
+        ```docker run --rm --interactive --volume $PWD:/app matthewpatell/universal-docker-server:3.8 bash -c 'cd /app && composer global require "fxp/composer-asset-plugin:^1.4.2" && composer global require "hirak/prestissimo:~0.3.7" && composer install --no-scripts'```
 
 That's all. Check it. :)
