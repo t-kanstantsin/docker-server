@@ -3,8 +3,7 @@ FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.0
 # Utils
 RUN apk add --no-cache \
             bash bash-completion coreutils \
-            mc htop \
-            nano vim \
+            mc htop nano \
             git rsyslog \
             curl wget zip unzip \
     # Fix terminal
