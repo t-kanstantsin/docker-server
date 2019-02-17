@@ -26,7 +26,6 @@ services:
       - ${PACKAGE_DOCKER_FOLDER}/supervisord/supervisord.conf:/etc/supervisord.conf
       - ${PROJECT_DOCKER_FOLDER}/supervisord/server/logs:/var/log/supervisord
       - ${PACKAGE_DOCKER_FOLDER}/supervisord/server/services:/etc/supervisor/conf.d
-      - ${PACKAGE_DOCKER_FOLDER}/supervisord/server/services-alpine/1.php-fpm.conf:/etc/supervisor/conf.d/1.php-fpm.conf
     working_dir: ${PROJECT_ROOT_CONTAINER}
     networks:
       common:
