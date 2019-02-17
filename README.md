@@ -129,5 +129,31 @@ to the require section of your `composer.json` file.
     ```bash
     docker run --rm --interactive --volume $PWD:/app matthewpatell/universal-docker-server:3.8 bash -c 'cd /app && composer global require "fxp/composer-asset-plugin:^1.4.2" && composer global require "hirak/prestissimo:~0.3.7" && composer install --no-scripts'
     ```
+    
+- Use git-container instead of git itself
+
+```bash
+
+docker run -it --rm \
+        --user $(id -u):$(id -g) \
+        -v $HOME:$HOME:rw \
+        -v /etc/passwd:/etc/passwd:ro \
+        -v /etc/group:/etc/group:ro \
+        -v $PWD:$PWD:rw \
+        -w $PWD \
+        alpine/git \
+        clone [command]
+
+# Or add alias in ~/.profile (change `git` to any another keyword if git actually installed)
+cat >> ~/.profile << EOF
+    function git () {
+        (docker run -it --rm --user \$(id -u):\$(id -g) -v \$HOME:\$HOME:rw -v /etc/passwd:/etc/passwd:ro -v /etc/group:/etc/group:ro -v \$PWD:\$PWD:rw -w \$PWD alpine/git "\$@")
+    }
+EOF
+source ~/.profile
+# and use via alias
+git clone git@githab.com:foob/bar.git .
+git pull
+```
 
 That's all. Check it. :)
