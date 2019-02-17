@@ -34,7 +34,6 @@ RUN apk add --no-cache \
     \
     # Install supervisord
     && apk add --no-cache supervisor \
-    # TODO: check paths.
     && mkdir -p /var/log/supervisord
 
 # TODO: check path to crond - changed in alpine.
