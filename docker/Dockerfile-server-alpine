@@ -1,36 +1,33 @@
 FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.5-php7.3
 
 # Utils
-RUN apk add --no-cache \
-            bash bash-completion coreutils \
-            mc htop nano \
-            git rsyslog \
-            curl wget zip unzip \
+RUN apk add --no-cache --virtual .build-deps \
+            git \
+    \
+    && apk add --no-cache \
+            bash coreutils \
+            mc htop \
+            rsyslog \
     # Fix terminal
-    # TODO: check i needed in alpine.
     && echo "export TERM=xterm mc" >> ~/.bashrc \
     \
-    # Install ssl cerbot
+    # Cerbot
     # TODO check if works in same way.
     && apk add --no-cache certbot \
     \
-    # install sshd
-    # TODO: check paths in alpine.
-    && apk add --no-cache openssh-server openssh-client \
-    && mkdir -p /var/run/sshd \
-    #RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
-    && sed -ri 's/PermitRootLogin without-password/PermitRootLogin yes/g' /etc/ssh/sshd_config \
-    # Put your own public key at id_rsa.pub for key-based login.
-    && mkdir -p /root/.ssh && chmod 700 /root/.ssh \
-    && touch /root/.ssh/authorized_keys \
-    \
-    # Install composer
-    && curl -sS https://getcomposer.org/installer -o composer-setup.php \
-    && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    \
+    # Supervisor
+    && apk add --no-cache python3 \
+        && python3 -m ensurepip \
+        && rm -r /usr/lib/python*/ensurepip \
+        && pip3 install --upgrade pip setuptools \
+        && if [ ! -e /usr/bin/pip ]; then ln -s pip3 /usr/bin/pip ; fi \
+        && if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi \
+        && rm -r /root/.cache \
     # Install supervisord
-    && apk add --no-cache supervisor \
-    && mkdir -p /var/log/supervisord
+    && pip install git+https://github.com/Supervisor/supervisor \
+    && mkdir -p /var/log/supervisord \
+    \
+    && apk del .build-deps
 
 # TODO: check path to crond - changed in alpine.
 
