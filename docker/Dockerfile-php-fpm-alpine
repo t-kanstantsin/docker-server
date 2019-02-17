@@ -1,7 +1,4 @@
-FROM php:7.1-fpm-alpine
-
-# Setup environment
-ENV DEBIAN_FRONTEND noninteractive
+FROM php:7.3-fpm-alpine
 
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
@@ -23,23 +20,23 @@ ENV BUILD_DEPS \
         libtool \
         icu-dev \
         libxml2-dev \
-        postgresql-dev \
         gettext-dev \
         enchant-dev aspell-dev \
         tidyhtml-dev \
-        bzip2-dev \
-        yaml-dev \
-        gmp-dev \
         libxslt-dev \
-        openldap-dev \
+        yaml-dev \
+        bzip2-dev libzip-dev \
         recode-dev \
-        net-snmp-dev
+        net-snmp-dev \
+        postgresql-dev \
+        openldap-dev \
+        gmp-dev
 
 ENV PERSISTENT_DEPS \
         freetype libjpeg-turbo libpng \
         libwebp libxpm imagemagick \
         libltdl \
-        icu icu-libs \
+        icu-libs \
         libxml2 \
         libpq \
         gettext \
@@ -47,7 +44,7 @@ ENV PERSISTENT_DEPS \
         tidyhtml \
         libxslt \
         yaml \
-        bzip2 \
+        bzip2 libzip \
         recode \
         net-snmp
 
@@ -68,6 +65,8 @@ RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/test
         bcmath gmp \
         opcache \
         intl \
+        iconv \
+        mbstring \
         dba \
         mysqli pgsql pdo_mysql pdo_pgsql \
         soap \
@@ -89,8 +88,7 @@ RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/test
     # Pecl \
     && pecl channel-update pecl.php.net \
     && pecl install imagick && docker-php-ext-enable imagick \
-    && pecl install yaml-2.0.0 && docker-php-ext-enable yaml \
-    && pecl install xdebug \
+    && pecl install yaml-2.0.4 && docker-php-ext-enable yaml \
     && apk del .build-deps
 
 CMD ["php-fpm"]

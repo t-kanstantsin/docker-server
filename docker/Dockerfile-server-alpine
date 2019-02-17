@@ -1,4 +1,4 @@
-FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.0
+FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.5-php7.3
 
 # Utils
 RUN apk add --no-cache \
