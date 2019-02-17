@@ -23,9 +23,10 @@ services:
       - ${PACKAGE_DOCKER_FOLDER}/php/mods-available/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ${PROJECT_DOCKER_FOLDER}/php/logs:/var/log/php7.1-fpm/
       # supervisor
-      - ${PACKAGE_DOCKER_FOLDER}/supervisord/supervisord.conf:/etc/supervisor/supervisord.conf
+      - ${PACKAGE_DOCKER_FOLDER}/supervisord/supervisord.conf:/etc/supervisord.conf
       - ${PROJECT_DOCKER_FOLDER}/supervisord/server/logs:/var/log/supervisord
       - ${PACKAGE_DOCKER_FOLDER}/supervisord/server/services:/etc/supervisor/conf.d
+      - ${PACKAGE_DOCKER_FOLDER}/supervisord/server/services-alpine/1.php-fpm.conf:/etc/supervisor/conf.d/1.php-fpm.conf
     working_dir: ${PROJECT_ROOT_CONTAINER}
     networks:
       common:

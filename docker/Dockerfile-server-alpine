@@ -1,4 +1,4 @@
-FROM registry.kakadu.space/web/mypets:4.0-php-fpm
+FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.0
 
 # Utils
 RUN apk add --no-cache \
