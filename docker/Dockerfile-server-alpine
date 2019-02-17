@@ -3,7 +3,7 @@ FROM tkanstantsin/universal-docker-server-php-fpm-alpine:4.0
 # Utils
 RUN apk add --no-cache \
             bash bash-completion coreutils \
-            mc htop bash-completion \
+            mc htop \
             nano vim \
             git rsyslog \
             curl wget zip unzip \
@@ -28,9 +28,6 @@ RUN apk add --no-cache \
     # Install composer
     && curl -sS https://getcomposer.org/installer -o composer-setup.php \
     && php composer-setup.php --install-dir=/usr/local/bin --filename=composer \
-    \
-    # MySQL client
-    && apk add --no-cache mysql-client \
     \
     # Install supervisord
     && apk add --no-cache supervisor \
