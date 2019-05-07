@@ -1,0 +1,8 @@
+FROM tkanstantsin/universal-docker-server-alpine:4.5-php7.3
+
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    && pecl install xdebug \
+    && apk del .build-deps \
+    && docker-php-ext-enable xdebug
+
+CMD ["supervisord", "-n"]
