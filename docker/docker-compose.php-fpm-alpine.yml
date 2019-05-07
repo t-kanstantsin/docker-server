@@ -20,7 +20,8 @@ services:
       # php
       - ${PACKAGE_DOCKER_FOLDER}/php/php.ini-production:/usr/local/etc/php/php.ini
       - ${PACKAGE_DOCKER_FOLDER}/php/pool.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - ${PACKAGE_DOCKER_FOLDER}/php/mods-available/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
+      # enable for dev only
+      #- ${PACKAGE_DOCKER_FOLDER}/php/mods-available/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
       - ${PROJECT_DOCKER_FOLDER}/php/logs:/var/log/php-fpm/
       # supervisor
       - ${PACKAGE_DOCKER_FOLDER}/supervisord/supervisord.conf:/etc/supervisord.conf
