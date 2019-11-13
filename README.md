@@ -39,13 +39,13 @@ to the require section of your `composer.json` file.
         }
     }
     ```
-    where **"docker/.env-local"** relative path to your local env config _(will be created in next step)_.
+    where **"docker/.env.local"** relative path to your local env config _(will be created in next step)_.
 
 1. Run: ```composer server init```. This will create a **docker** folder in your project root directory.
 
 1. Change **root-path** in _docker/nginx/conf-dynamic.d/sample.conf_
 
-1. See [supported os](#supported-os) and config **docker/.env-local** according to your operating system
+1. See [supported os](#supported-os) and config **docker/.env.local** according to your operating system
 
 1. Run server: ```composer server up ```
 
@@ -59,10 +59,20 @@ to the require section of your `composer.json` file.
  
 ## PhpStorm samples
  - [Deploy config](phpstorm/SAMPLE_DEPLOY_CONFIG.xml)
+ 
+## Latest docker images
+ - NGINX
+    - matthewpatell/universal-docker-nginx:3.5
+ - SERVER
+    - matthewpatell/universal-docker-server:3.9
+    - matthewpatell/universal-docker-server:3.9-dev
+    - matthewpatell/universal-docker-server:3.9-jre (with java)
+ - PHP-FPM:
+    - matthewpatell/universal-docker-server-php-fpm:3.8
 
 **FEATURES**
 ---
-- Multiple config: ```vendor/bin/site-start.sh --env-file=docker/.env-dev,docker/.env-local```
+- Multiple config: ```vendor/bin/site-start.sh --env-file=docker/.env.dev,docker/.env.local```
 - Use environment, extends, overriding between configs
     ```dotenv
     # Simple usage
@@ -105,7 +115,7 @@ to the require section of your `composer.json` file.
     OR see below **static network layer**
   
 - **Add static network layer** _(only for Linux)_
-    1. Change **SERVICES** variable in your local env (docker/.env-local) to:
+    1. Change **SERVICES** variable in your local env (docker/.env.local) to:
         ```dotenv
         SERVICES="$SERVICES -f docker/docker-compose.common.yml -f docker/docker-compose.static-network.yml"
         ```
