@@ -1,4 +1,4 @@
-FROM php:7.3-fpm-alpine
+FROM php:7.3.13-fpm-alpine3.11
 
 ENV LANG=en_US.UTF-8 \
     LANGUAGE=en_US.UTF-8
