@@ -1,6 +1,6 @@
 # Changes
 
-# 4.7
+# 4.7 - php7.3.13 - nginx1.17.6 - alpine3.11
 
 - alpine:
     - php-fpm
@@ -24,7 +24,7 @@
 `tkanstantsin/userver-php:4.7-php7.3.13-alpine3.11-dev`
 
 
-# 4.5
+# 4.5 - php7.3.2 - nginx1.15.7 - alpine3.9
 
 - alpine
     - php-fpm
