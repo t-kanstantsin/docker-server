@@ -9,5 +9,5 @@ function nginxProxyIp() {
          fi
     fi
 
-    echo $HOST_ETC_HOSTS_IP
+    echo "$HOST_ETC_HOSTS_IP"
 }
