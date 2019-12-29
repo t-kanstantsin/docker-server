@@ -9,7 +9,7 @@ ACTION=$1
 
 NGINX_CONF_PATH="${HOST_NGINX_CONF_DIR}/universal-${PROJECT_NAME}.conf"
 
-if [[ "$ACTION" = "down" && "$HOST_NGINX_KEEP_CONF" = "no" ]]; then
+if [[ "$ACTION" == "down" && "$HOST_NGINX_KEEP_CONF" == "no" ]]; then
     # Delete previous config if exist
     if [ -e "$NGINX_CONF_PATH" ]; then
         rm "$NGINX_CONF_PATH"
@@ -47,7 +47,7 @@ fi
 
 if [[ $(<$NGINX_CONF_PATH) != "$NGINX_TEMPLATE_CODE" ]]; then
     # Create proxy config
-    echo "$NGINX_TEMPLATE_CODE" > "$NGINX_CONF_PATH"
+    echo "$NGINX_TEMPLATE_CODE" >"$NGINX_CONF_PATH"
     # Restart host nginx
     echo "Updated $NGINX_CONF_PATH..."
     echo "Restarting nginx server..."
