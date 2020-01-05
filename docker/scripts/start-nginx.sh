@@ -10,4 +10,4 @@ if [[ ! -z "$REDIS_HOST" ]]; then
     export REDIS_IP=$(getent hosts "$REDIS_HOST" | cut -d" " -f1)
 fi
 
-nginx -g 'daemon on;'
+nginx -g 'daemon off;'
