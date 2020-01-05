@@ -16,7 +16,6 @@ echo "export PHP_IDE_CONFIG=\"${PHP_IDE_CONFIG}"\" >> ~/.bashrc
 # php debug
 if [[ $PROJECT_ENVIRONMENT == "DEV" ]]; then
     phpenmod xdebug
-    service php7.1-fpm restart
 fi
 
 # Set ssh access
