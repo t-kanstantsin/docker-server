@@ -8,5 +8,5 @@ function dockerDomains() {
         RESULT="$RESULT ${!env_name}"
     done
 
-    echo $RESULT
+    echo "$RESULT"
 }

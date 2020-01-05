@@ -9,7 +9,7 @@ set -o nounset # exit when tries to use undeclared variables.
 
 # Export environment to OS
 set -a
-. ${ENV_PATH}
+. "$ENV_PATH"
 set +a
 
 bash /scripts/set-permissions.sh
@@ -35,7 +35,7 @@ find /etc/nginx/conf-dynamic.d/ -name "*.conf" -type f -delete
 
 # add default host
 if [ "$NGINX_DEFAULT_HOST" = "yes" ]; then
-    cp ${PACKAGE_DOCKER_FOLDER_CONTAINER}/nginx/templates/default.conf /etc/nginx/conf-dynamic.d/default.conf
+    cp "${PACKAGE_DOCKER_FOLDER_CONTAINER}/nginx/templates/default.conf" /etc/nginx/conf-dynamic.d/default.conf
 fi
 
 # create dynamic nginx configs

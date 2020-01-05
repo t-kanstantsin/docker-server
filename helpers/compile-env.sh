@@ -44,7 +44,7 @@ for ENV_FILE in "${ADDR[@]}"; do
         # Getting environments for using in current and parent script
         # This environments will be passed in docker compose files
         set -a
-        . $ENV_FILE_FULL_PATH
+        . "$ENV_FILE_FULL_PATH"
         set +a
 
         while IFS='=' read -r name value; do
@@ -65,12 +65,12 @@ for ENV_FILE in "${ADDR[@]}"; do
                         SERVER_ENVS_RECOMPILE_NAMES+=("$name")
                     fi
 
-                    nameIndex=$(indexOf $name ${SERVER_ENVS_RECOMPILE_NAMES[@]})
+                    nameIndex=$(indexOf "$name" "${SERVER_ENVS_RECOMPILE_NAMES[@]}")
 
                     SERVER_ENVS_RECOMPILE_VALUES[$nameIndex]=$value
                 fi
             fi
-        done <$ENV_FILE_FULL_PATH
+        done <"$ENV_FILE_FULL_PATH"
     fi
 done
 
@@ -79,21 +79,21 @@ SERVER_ENVS=("${SERVER_ENVS[@]:1}")
 SERVER_ENVS_RECOMPILE_NAMES=("${SERVER_ENVS_RECOMPILE_NAMES[@]:1}")
 
 # Recompile environments temp file
-if [ ! -z $PROJECT_ENV_PATH_FORCE ]; then
+if [ ! -z "$PROJECT_ENV_PATH_FORCE" ]; then
     TMP_RECOMPILE_ENVS="${PROJECT_ENV_PATH_FORCE}/.env-tmp"
 else
     TMP_RECOMPILE_ENVS="${PROJECT_DOCKER_FOLDER}/.env-tmp"
 fi
 
 # Echo recompile envs to temp file
-echo -n "" >$TMP_RECOMPILE_ENVS
+echo -n "" >"$TMP_RECOMPILE_ENVS"
 for recompile_env_name_index in ${!SERVER_ENVS_RECOMPILE_NAMES[@]}; do
     recompile_env_name=${SERVER_ENVS_RECOMPILE_NAMES[$recompile_env_name_index]}
     echo "$recompile_env_name=${SERVER_ENVS_RECOMPILE_VALUES[$recompile_env_name_index]}" >>$TMP_RECOMPILE_ENVS
 done
 # Recompile && remove tmp file
 . "$TMP_RECOMPILE_ENVS"
-rm $TMP_RECOMPILE_ENVS
+rm "$TMP_RECOMPILE_ENVS"
 
 # Get realpath docker compose files by default
 SERVICES_PATHS=""
@@ -114,7 +114,7 @@ export SERVICES=$SERVICES_PATHS
 export PROJECT_ENV_PATH="${PROJECT_DOCKER_FOLDER}/.env"
 ENV_PATH=$PROJECT_ENV_PATH
 
-if [ ! -z $PROJECT_ENV_PATH_FORCE ]; then
+if [ ! -z "$PROJECT_ENV_PATH_FORCE" ]; then
     ENV_PATH="${PROJECT_ENV_PATH_FORCE}/.env-compiled"
 fi
 
@@ -122,7 +122,7 @@ fi
 if [ "$ACTION" = "down" ] || [ "$ACTION" = "restart" ]; then
     if [ -f "$PROJECT_ENV_PATH" ]; then
         set -a
-        . $PROJECT_ENV_PATH
+        . "$PROJECT_ENV_PATH"
         set +a
     fi
 
@@ -140,13 +140,13 @@ if [ "$ENV_PATH" != "" ]; then
         for ENV_NAME in ${SERVER_ENVS[@]}; do
             case "${!ENV_NAME}" in
             *\ *)
-                echo "$ENV_NAME=\"${!ENV_NAME}\"" >>${ENV_PATH}
+                echo "$ENV_NAME=\"${!ENV_NAME}\"" >>"$ENV_PATH"
                 ;;
             *\=*)
-                echo "$ENV_NAME=\"${!ENV_NAME}\"" >>${ENV_PATH}
+                echo "$ENV_NAME=\"${!ENV_NAME}\"" >>"$ENV_PATH"
                 ;;
             *)
-                echo "$ENV_NAME=${!ENV_NAME}" >>${ENV_PATH}
+                echo "$ENV_NAME=${!ENV_NAME}" >>"$ENV_PATH"
                 ;;
             esac
         done
