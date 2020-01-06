@@ -17,7 +17,7 @@ CURRENT_DIR="${BASH_SOURCE%/*}"
 source "$CURRENT_DIR/functions/base.sh"
 
 # Get package vendor dir
-VENDOR_DIR=$(dirname $CURRENT_DIR)
+VENDOR_DIR=$(dirname "$CURRENT_DIR")
 
 # Get vendor parent dir
 VENDOR_PARENT_DIR=$(sed -n -e 's/\(^.*\)\(\(\/vendor\).*\)/\1/p' <<<"$VENDOR_DIR")

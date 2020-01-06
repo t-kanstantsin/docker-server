@@ -12,7 +12,7 @@ indexOf() {
     index=$(echo ${array[@]/$element//} | cut -d/ -f1 | wc -w | tr -d ' ')
     lastIndex=$(($(echo ${#array[@]}) - 1))
 
-    if (( $index > $lastIndex )); then
+    if (($index > $lastIndex)); then
         echo -1
     else
         echo $index
