@@ -41,6 +41,7 @@ if [[ ! -f "$NGINX_CONF_PATH" ]]; then
         sudo touch "$NGINX_CONF_PATH"
     fi
 fi
+
 if [[ ! -w "$NGINX_CONF_PATH" ]]; then
     sudo chown $(id -u):$(id -g) "$NGINX_CONF_PATH"
 fi
