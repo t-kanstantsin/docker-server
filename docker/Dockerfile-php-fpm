@@ -49,4 +49,4 @@ RUN update-rc.d php7.1-fpm defaults
 
 EXPOSE 9000
 
-CMD service php7.1-fpm start && tail -f /var/log/php7.1-fpm/fpm.log
+CMD service php7.1-fpm start && tail -f /var/log/php-fpm/fpm.log

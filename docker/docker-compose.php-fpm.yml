@@ -26,7 +26,7 @@ services:
       - ${PACKAGE_DOCKER_FOLDER}/php/php-fpm.conf:/etc/php/7.1/fpm/php-fpm.conf
       - ${PACKAGE_DOCKER_FOLDER}/php/pool.d:/etc/php/7.1/fpm/pool.d/
       - ${PACKAGE_DOCKER_FOLDER}/php/mods-available/xdebug.ini:/etc/php/7.1/mods-available/xdebug.ini
-      - ${PROJECT_DOCKER_FOLDER}/php/logs:/var/log/php7.1-fpm/
+      - ${PROJECT_DOCKER_FOLDER}/php/logs:/var/log/php-fpm/
       # supervisor
       - ${PACKAGE_DOCKER_FOLDER}/supervisord/supervisord.conf:/etc/supervisor/supervisord.conf
       - ${PROJECT_DOCKER_FOLDER}/supervisord/server/logs:/var/log/supervisord
