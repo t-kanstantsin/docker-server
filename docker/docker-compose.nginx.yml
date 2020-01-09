@@ -22,6 +22,7 @@ services:
     - ${PACKAGE_DOCKER_FOLDER}/nginx/conf.d:/etc/nginx/conf.d
     - ${PACKAGE_DOCKER_FOLDER}/nginx/lua:/etc/nginx/lua
     - ${PACKAGE_DOCKER_FOLDER}/nginx/snippets:/etc/nginx/snippets
+    - ${PROJECT_DOCKER_FOLDER}/nginx/web:/etc/nginx/web
     - ${PROJECT_DOCKER_FOLDER}/nginx/logs:/var/log/nginx
     networks:
       common:
