@@ -15,8 +15,8 @@ services:
       container: ${COMPOSE_PROJECT_NAME}_mysql
     volumes:
       - ${PACKAGE_DOCKER_FOLDER}/mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf
-      - ${PROJECT_DOCKER_FOLDER}/mysql/storage:/var/lib/mysql
-      - ${PROJECT_DOCKER_FOLDER}/mysql/logs:/var/log/mysql
+      - ${MYSQL_STORAGE_PATH}:/var/lib/mysql
+      - ${MYSQL_LOG_PATH}:/var/log/mysql
     networks:
       common:
         aliases:
