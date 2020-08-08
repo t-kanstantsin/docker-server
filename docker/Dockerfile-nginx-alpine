@@ -1,16 +1,18 @@
-FROM alpine:3.11
+ARG BASE_IMG
+
+FROM $BASE_IMG
+
+ARG NGINX_VERSION
+ARG NGINX_DEVEL_KIT_MODULE_VERSION
+ARG NGINX_LUA_MODULE_VERSION
+ARG NGINX_LUAJIT_VERSION
+ARG NGINX_LUA_REDIS_VERSION
 
 MAINTAINER Matthew Patell <lukomi@mail.ru>
 
-ENV NGINX_VERSION 1.17.6
-
-ENV DEVEL_KIT_MODULE_VERSION 0.3.1
-ENV LUA_MODULE_VERSION 0.10.15
-
 ENV LUAJIT_LIB=/usr/lib
-ENV LUAJIT_INC=/usr/include/luajit-2.1
+ENV LUAJIT_INC=/usr/include/luajit-$NGINX_LUAJIT_VERSION
 
-ENV LUA_REDIS_VERSION 0.27
 
 RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     && CONFIG="\
@@ -57,8 +59,8 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         --with-compat \
         --with-file-aio \
         --with-http_v2_module \
-        --add-module=/usr/src/ngx_devel_kit-$DEVEL_KIT_MODULE_VERSION \
-        --add-module=/usr/src/lua-nginx-module-$LUA_MODULE_VERSION \
+        --add-module=/usr/src/ngx_devel_kit-$NGINX_DEVEL_KIT_MODULE_VERSION \
+        --add-module=/usr/src/lua-nginx-module-$NGINX_LUA_MODULE_VERSION \
         --add-module=/tmp/ngx_brotli \
     " \
     && addgroup -S nginx \
@@ -81,9 +83,9 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
         git \
     && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz -o nginx.tar.gz \
     && curl -fSL https://nginx.org/download/nginx-$NGINX_VERSION.tar.gz.asc  -o nginx.tar.gz.asc \
-    && curl -fSL https://github.com/simpl/ngx_devel_kit/archive/v$DEVEL_KIT_MODULE_VERSION.tar.gz -o ndk.tar.gz \
-    && curl -fSL https://github.com/openresty/lua-nginx-module/archive/v$LUA_MODULE_VERSION.tar.gz -o lua.tar.gz \
-    && curl -fSL https://github.com/openresty/lua-resty-redis/archive/v$LUA_REDIS_VERSION.tar.gz -o lua_redis.tar.gz \
+    && curl -fSL https://github.com/simpl/ngx_devel_kit/archive/v$NGINX_DEVEL_KIT_MODULE_VERSION.tar.gz -o ndk.tar.gz \
+    && curl -fSL https://github.com/openresty/lua-nginx-module/archive/v$NGINX_LUA_MODULE_VERSION.tar.gz -o lua.tar.gz \
+    && curl -fSL https://github.com/openresty/lua-resty-redis/archive/v$NGINX_LUA_REDIS_VERSION.tar.gz -o lua_redis.tar.gz \
     && git clone https://github.com/google/ngx_brotli.git /tmp/ngx_brotli \
     && export GNUPGHOME="$(mktemp -d)" \
     && found=''; \
@@ -104,7 +106,7 @@ RUN GPG_KEYS=B0F4253373F8F6F510D42178520A9993A1C052F8 \
     && tar -zxC /usr/src -f nginx.tar.gz \
     && tar -zxC /usr/src -f ndk.tar.gz \
     && tar -zxC /usr/src -f lua.tar.gz \
-    && tar -xzvf lua_redis.tar.gz -C /etc/nginx/lua_lib --strip-components=2 lua-resty-redis-$LUA_REDIS_VERSION/lib/resty/redis.lua \
+    && tar -xzvf lua_redis.tar.gz -C /etc/nginx/lua_lib --strip-components=2 lua-resty-redis-$NGINX_LUA_REDIS_VERSION/lib/resty/redis.lua \
     && rm nginx.tar.gz ndk.tar.gz lua.tar.gz lua_redis.tar.gz \
     && cd /tmp/ngx_brotli \
     && git submodule update --init \
