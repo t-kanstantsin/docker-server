@@ -17,31 +17,31 @@ VENDOR_DIR=$(getVendorPath "${BASH_SOURCE[0]}")
 . "${VENDOR_DIR}/helpers/compile-env.sh"
 
 ACTION=$1
-DETACHED_MODE=$DEFAULT_DETACHED_MODE
+DETACHED_MODE=${DEFAULT_DETACHED_MODE}
 
-if [ "$ACTION" = "compile" ]; then
+if [[ "$ACTION" = "compile" ]]; then
     echo "Env file created success"
     exit 0
 fi
 
-if [[ "${ACTION}" != "up" ]] && [ "$DETACHED_MODE" = "-d" ]; then
+if [[ "${ACTION}" != "up" ]] && [[ "$DETACHED_MODE" = "-d" ]]; then
     DETACHED_MODE=""
 fi
 
 COMMAND=(docker-compose $SERVICES $ACTION $DETACHED_MODE $OTHER_PARAMS)
 
-if [ "$ACTION" = "restart" ]; then
+if [[ "$ACTION" = "restart" ]]; then
     # Stop
     "${COMMAND[@]/restart/down}"
     # Recompile/reexport env
     . "${VENDOR_DIR}/helpers/compile-env.sh" "up"
     # Run
     "${COMMAND[@]/restart/up}" $DEFAULT_DETACHED_MODE
-elif [ "$ACTION" = "init" ]; then
+elif [[ "$ACTION" = "init" ]]; then
 
     TARGET_DIR="$VENDOR_PARENT_DIR/docker"
 
-    if [ ! -d "$TARGET_DIR" ]; then
+    if [[ ! -d "$TARGET_DIR" ]]; then
         cp -r "$VENDOR_DIR/sample" "$TARGET_DIR/"
         mv "$TARGET_DIR/.env-sample" "$TARGET_DIR/.env.local"
         mv "$TARGET_DIR/.env-sample-prod" "$TARGET_DIR/.env.prod"
@@ -66,7 +66,7 @@ else
     "${COMMAND[@]}"
 fi
 
-if [ "$ACTION" = "up" ] || [ "$ACTION" = "down" ] || [ "$ACTION" = "restart" ]; then
+if [[ "$ACTION" = "up" ]] || [[ "$ACTION" = "down" ]] || [[ "$ACTION" = "restart" ]]; then
     # Auto update hosts file for host
     . "${VENDOR_DIR}/helpers/update-hosts.sh" "$ACTION"
 
