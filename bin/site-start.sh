@@ -10,6 +10,14 @@ function getVendorPath() {
   echo "$vendor$package"
 }
 
+function universalSed() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        sed -i "" $1 $2
+    else
+        sed -i $1 $2
+    fi
+}
+
 # get package vendor dir
 VENDOR_DIR=$(getVendorPath "${BASH_SOURCE[0]}")
 
@@ -52,7 +60,7 @@ elif [[ "$ACTION" = "init" ]]; then
             ((${#RANDKEY} >= 10)); do :; done
 
         for file in .env.local .env.prod; do
-            sed -i "" "s/change_this_string/$RANDKEY/g" "$TARGET_DIR/$file"
+            universalSed "s/change_this_string/$RANDKEY/g" "$TARGET_DIR/$file"
         done
 
         echo "Server init success."
