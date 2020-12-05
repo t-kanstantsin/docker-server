@@ -90,6 +90,8 @@ for TEMPLATE_NAME in ${PACKAGE_DOCKER_FOLDER_CONTAINER}/nginx/conf-dynamic.d/*.c
 
     for DOMAIN in ${ONLY_DOMAINS}; do
         DOMAIN_1LVL=$(echo "${DOMAIN}" | sed -n "s/\([^\.]*\)\.\([^\.]*\)/\2/p")
+
+        # invalid value
         DOMAIN_2LVL=$(echo "${DOMAIN}" | sed -n "s/\([^\.]*\)\.\([^\.]*\)/\1/p")
 
         if [ "$DOMAIN_DEFAULT" = "$DOMAIN" ] && [ "$NGINX_DEFAULT_HOST" != "yes" ]; then

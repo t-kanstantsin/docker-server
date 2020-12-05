@@ -1,0 +1,25 @@
+ARG BASE_IMG
+
+FROM $BASE_IMG
+
+# Utils
+RUN apk add --no-cache --virtual .build-deps \
+            git \
+    \
+    && apk add --no-cache \
+            bash coreutils \
+            mc htop curl \
+            rsyslog \
+    # Fix terminal
+    && echo "export TERM=xterm mc" >> ~/.bashrc \
+    \
+    # Cerbot
+    && apk add --no-cache certbot \
+    \
+    # Supervisor
+    && apk add --no-cache supervisor \
+    && mkdir -p /var/log/supervisord \
+    \
+    && apk del .build-deps
+
+CMD ["supervisord", "-n"]

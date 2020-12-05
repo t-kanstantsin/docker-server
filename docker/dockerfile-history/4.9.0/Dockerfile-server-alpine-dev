@@ -1,0 +1,17 @@
+ARG BASE_IMG
+
+FROM $BASE_IMG
+
+RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS \
+    \
+    # xdebug
+    && pecl install xdebug \
+    \
+    # phan
+    && pecl install ast-1.0.5 \
+    && docker-php-ext-enable ast \
+    \
+    # cleanup
+    && apk del .build-deps
+
+CMD ["supervisord", "-n"]
