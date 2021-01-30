@@ -10,17 +10,10 @@ CURRENT_DIR=${CURRENT_DIR:-$(dirname "$0")}
 TEST="0"
 IMG_NAMESPACE="tkanstantsin/userver-"
 #IMG_NAMESPACE="matthewpatell/universal-docker-"
-IMG_VERSION=4.9.0
-PHP_VERSION="7.4.12"
+IMG_VERSION=4.10.0
+PHP_VERSION="7.4.14"
 
-NGINX_VERSION="1.19.5"
-# https://github.com/vision5/ngx_devel_kit
-NGINX_DEVEL_KIT_MODULE_VERSION="0.3.1"
-# https://github.com/openresty/lua-nginx-module
-NGINX_LUA_MODULE_VERSION="0.10.15" # max "0.10.18"
-NGINX_LUAJIT_VERSION="2.1"
-# https://github.com/openresty/lua-resty-redis
-NGINX_LUA_REDIS_VERSION="0.29"
+NGINX_VERSION="1.19.6"
 
 BASE_OS_VERSION="3.11"
 BASE_OS="alpine"
@@ -31,7 +24,7 @@ IMG="all"
 # Parse input args
 while [[ ! $# -eq 0 ]]; do
   case "$1" in
-  --test)
+  --test | -t)
     TEST=1
     ;;
 
@@ -105,10 +98,6 @@ if [[ "${IMG}" == "nginx" ]] || [[ "${IMG}" == "all" ]]; then
   COMMAND="docker build \\
     --build-arg BASE_IMG=\"alpine:${BASE_OS_VERSION}\" \\
     --build-arg NGINX_VERSION=${NGINX_VERSION} \\
-    --build-arg NGINX_DEVEL_KIT_MODULE_VERSION=${NGINX_DEVEL_KIT_MODULE_VERSION} \\
-    --build-arg NGINX_LUA_MODULE_VERSION=${NGINX_LUA_MODULE_VERSION} \\
-    --build-arg NGINX_LUAJIT_VERSION=${NGINX_LUAJIT_VERSION} \\
-    --build-arg NGINX_LUA_REDIS_VERSION=${NGINX_LUA_REDIS_VERSION} \\
     -t \"${NGINX_NAME}\" \\
     -f \"${CURRENT_DIR}/Dockerfile-${NGINX}\" \\
     \"${CURRENT_DIR}\""
