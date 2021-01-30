@@ -81,7 +81,7 @@ for TEMPLATE_NAME in ${PACKAGE_DOCKER_FOLDER_CONTAINER}/nginx/conf-dynamic.d/*.c
     echo "" >> "${TARGET_CONFIG_PATH}"
 
     # root path
-    if [[ -z "${REPLACE_ROOT}" ]]; then
+    if [[ -z "${REPLACE_ROOT+x}" ]]; then
         REPLACE_ROOT=$(findPattern "root-path" "$BASE_TEMPLATE_CODE}")
     fi
 
